@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app@latest:*)",
+      "Bash(npm install)",
+      "Bash(npm run dev)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nNext.jsでエンジニアスキルシートを作成\n\n- Next.js 15 + TypeScript + Tailwind CSSを使用\n- モダンで美しいデザイン（グラデーション、ガラスモーフィズム）\n- レスポンシブ対応（モバイル、タブレット、デスクトップ）\n- ダークモード対応\n- 再利用可能なコンポーネント構造\n- プロフィール、スキル、職務経歴、プロジェクトセクション\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
