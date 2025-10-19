@@ -5,11 +5,12 @@ interface HeaderProps {
   title: string;
   email: string;
   location: string;
+  nearestStation?: string;
   github?: string;
   linkedin?: string;
 }
 
-export default function Header({ name, title, email, location, github, linkedin }: HeaderProps) {
+export default function Header({ name, title, email, location, nearestStation, github, linkedin }: HeaderProps) {
   return (
     <header className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16 px-6 rounded-2xl shadow-2xl mb-8">
       <div className="max-w-4xl mx-auto">
@@ -34,6 +35,14 @@ export default function Header({ name, title, email, location, github, linkedin 
                 </svg>
                 <span>{location}</span>
               </div>
+              {nearestStation && (
+                <div className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full backdrop-blur-sm">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                  </svg>
+                  <span>{nearestStation}</span>
+                </div>
+              )}
               {github && (
                 <a href={github} className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full backdrop-blur-sm hover:bg-white/20 transition">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">

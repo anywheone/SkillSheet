@@ -2,26 +2,28 @@ import Header from '@/components/Header';
 import Section from '@/components/Section';
 import SkillCategory from '@/components/SkillCategory';
 import ExperienceCard from '@/components/ExperienceCard';
-import ProjectCard from '@/components/ProjectCard';
 import PersonalProjectCard from '@/components/PersonalProjectCard';
+import { getMainProjects, getOtherExperiences } from '@/data/experiences';
+import { profiles } from '@/data/profiles';
+import { getSkillsByVariant } from '@/data/skills';
 import { getFeaturedProjects } from '@/data/personalProjects';
 import { selfAppeal } from '@/data/selfAppeal';
-import { getSkillsByVariant } from '@/data/skills';
-import { profiles } from '@/data/profiles';
-import { getExperiencesByVariant } from '@/data/experiences';
+import { sortTechnologies } from '@/utils/sortTechnologies';
 import { HEADER_INFO, FOOTER_INFO } from '@/data/personalInfo';
 
-export default function Home() {
-  const skills = getSkillsByVariant('default');
-  const profileParagraphs = profiles['default'];
-  const experiences = getExperiencesByVariant('default');
+export default function TypeScriptPage() {
+  const variant = 'typescript';
+  const mainProjects = getMainProjects(variant);
+  const otherExperiences = getOtherExperiences(variant);
+  const profileParagraphs = profiles[variant];
+  const skills = getSkillsByVariant(variant);
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-900 py-8 px-4">
       <div className="max-w-6xl mx-auto">
         <Header
           name={HEADER_INFO.displayName}
-          title="フルスタックエンジニア"
+          title="TypeScript / React エンジニア"
           email={HEADER_INFO.email}
           location={HEADER_INFO.location}
           nearestStation={HEADER_INFO.nearestStation}
@@ -45,7 +47,6 @@ export default function Home() {
                 </p>
               ))}
             </div>
-
           </Section>
         </div>
 
@@ -72,7 +73,7 @@ export default function Home() {
 
         <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl shadow-xl p-8 mb-8">
           <Section
-            title="職務経歴"
+            title="主要プロジェクト"
             icon={
               <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -80,7 +81,7 @@ export default function Home() {
             }
           >
             <div className="space-y-0">
-              {experiences.map((exp) => (
+              {mainProjects.map((exp) => (
                 <ExperienceCard
                   key={exp.id}
                   company={exp.company}
@@ -88,12 +89,51 @@ export default function Home() {
                   period={exp.period}
                   description={exp.description}
                   achievements={exp.achievements}
-                  technologies={exp.technologies}
+                  technologies={sortTechnologies(exp.technologies, 'typescript')}
                 />
               ))}
             </div>
           </Section>
         </div>
+
+        {otherExperiences.length > 0 && (
+          <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl shadow-xl p-8 mb-8">
+            <Section
+              title="その他の経験"
+              icon={
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                </svg>
+              }
+            >
+              <div className="space-y-6">
+                {otherExperiences.map((exp) => (
+                  <div key={exp.id} className="border-l-4 border-blue-500 pl-4">
+                    <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100">
+                      {exp.company}
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                      {exp.position} | {exp.period}
+                    </p>
+                    <p className="text-gray-700 dark:text-gray-300 mb-2">
+                      {exp.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {sortTechnologies(exp.technologies, 'typescript').slice(0, exp.id === 'training' ? undefined : 6).map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-2 py-1 text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Section>
+          </div>
+        )}
 
         <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl shadow-xl p-8 mb-8">
           <Section
@@ -148,7 +188,7 @@ export default function Home() {
         </div>
 
         <footer className="text-center text-gray-500 dark:text-gray-400 mt-12 pb-8">
-          <p className="text-sm">© 2025 {FOOTER_INFO.copyright} - エンジニアスキルシート</p>
+          <p className="text-sm">© 2025 {FOOTER_INFO.copyright} - TypeScript / React エンジニア スキルシート</p>
           <p className="text-xs mt-2">Last Updated: {FOOTER_INFO.lastUpdated}</p>
         </footer>
       </div>
